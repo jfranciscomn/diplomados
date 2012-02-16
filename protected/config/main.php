@@ -8,7 +8,10 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'USS',
-
+	
+	'language'=>'es', // Este es el lenguaje en el que querés que muestre las cosas
+	'sourceLanguage'=>'es',
+	
 	// preloading 'log' component
 	'preload'=>array('log'),
 
@@ -53,10 +56,10 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=192.168.5.102;dbname=diplomado_desarrollo',
+			'connectionString' => 'mysql:host=174.143.28.45;dbname=517226_gobuss',
 			'emulatePrepare' => true,
-			'username' => 'desarrollo_uss',
-			'password' => '123qwe',
+			'username' => '517226_gobuss',
+			'password' => 'Zamarripa83',
 			'charset' => 'utf8',
 		),
 		
