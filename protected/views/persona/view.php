@@ -5,20 +5,25 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Persona', 'url'=>array('index')),
-	array('label'=>'Create Persona', 'url'=>array('create')),
-	array('label'=>'Update Persona', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Persona', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Persona', 'url'=>array('admin')),
+	array('label'=>'Listar Personas', 'url'=>array('index')),
+	array('label'=>'Crear Personas', 'url'=>array('create')),
+	array('label'=>'Administrar Personas', 'url'=>array('admin')),
+	array('label'=>'Editar', 'url'=>array('update', 'id'=>$model->id)),
+	array('label'=>'Eliminar', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'¿Estas seguro que deseas eliminiar este elemento?')),
+	
 );
 ?>
 
-<h1>View Persona #<?php echo $model->id; ?></h1>
+<div class="page-header">
+	<h1 style="margin-top:50px;" >Ver Persona #<?php echo $model->id; ?></h1>
+</div>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id',
+<div class='row'>
+	<div class='span12'>
+		<?php $this->widget('zii.widgets.CDetailView', array(
+			'data'=>$model,
+			'attributes'=>array(
+				'id',
 		'nombre',
 		'app',
 		'apm',
@@ -26,5 +31,24 @@ $this->menu=array(
 		'telefono',
 		'celular',
 		'correo',
-	),
-)); ?>
+			),
+		)); ?>
+	</div>
+	<div class='span4'>
+		<?php
+			$this->beginWidget('zii.widgets.CPortlet', array(
+				'title'=>'Operaciones',
+				));
+					//me quedé tratando de adivinar cual es el menú derecho del controlador CMenu
+			$this->widget('ext.custom.widgets.CCustomMenu', array(
+				'items'=>$this->menu,
+					//'htmlOptions'=>array('class'=>'label'),	
+				'modoopcion'=>false,			
+				));	
+			$this->endWidget();
+		?>
+	</div>
+</div>
+
+
+

@@ -1,22 +1,31 @@
 <?php
-$this->breadcrumbs=array(
-	'Personas',
-);
+/**
+ * The following variables are available in this template:
+ * - $this: the CrudCode object
+ */
+?>
+<?php
+echo "<?php\n";
+$label=$this->pluralize($this->class2name($this->modelClass));
+echo "\$this->breadcrumbs=array(
+	'$label',
+);\n";
+?>
 
 $this->menu=array(
-	array('label'=>'Crear Personas', 'url'=>array('create')),
-	array('label'=>'Administrar Personas', 'url'=>array('admin')),
+	array('label'=>'Crear <?php echo $label; ?>', 'url'=>array('create')),
+	array('label'=>'Administrar <?php echo $label; ?>', 'url'=>array('admin')),
 );
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" >Personas</h1>
+	<h1 style="margin-top:50px;" ><?php echo $label; ?></h1>
 </div>
 
 <div class='row'>
 	<div class="span12">
 
-		<?php $this->widget('ext.custom.widgets.CCustomListView', array(
+		<?php echo "<?php"; ?> $this->widget('ext.custom.widgets.CCustomListView', array(
 			'dataProvider'=>$dataProvider,
 			'headersview' =>'_headersview',
 			'footersview' => '_footersview',
@@ -24,7 +33,7 @@ $this->menu=array(
 		)); ?>
 	</div>
 	<div class="span4">					
-			<?php
+			<?php echo "<?php\n"; ?>
 				$this->beginWidget('zii.widgets.CPortlet', array(
 					'title'=>'Operaciones',
 				));

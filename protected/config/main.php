@@ -29,6 +29,7 @@ return array(
 			'password'=>'123qwe',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths'=>array('ext.YiiMongoDbSuite.gii','application.gii'),
 		),
 		
 	),
@@ -83,7 +84,8 @@ return array(
 			),
 		),
 	),
-	'theme'=>'zine',
+	//'theme'=>'zine',
+	'theme'=>'misalud',
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
