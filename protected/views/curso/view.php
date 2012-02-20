@@ -1,13 +1,13 @@
 <?php
 $this->breadcrumbs=array(
-	'Personas'=>array('index'),
+	'Cursos'=>array('index'),
 	$model->id,
 );
 
 $this->menu=array(
-	array('label'=>'Listar Personas', 'url'=>array('index')),
-	array('label'=>'Crear Personas', 'url'=>array('create')),
-	array('label'=>'Administrar Personas', 'url'=>array('admin')),
+	array('label'=>'Listar Cursos', 'url'=>array('index')),
+	array('label'=>'Crear Cursos', 'url'=>array('create')),
+	array('label'=>'Administrar Cursos', 'url'=>array('admin')),
 	array('label'=>'Editar', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Eliminar', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'¿Estas seguro que deseas eliminiar este elemento?')),
 	
@@ -15,7 +15,7 @@ $this->menu=array(
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" >Ver Persona #<?php echo $model->id; ?></h1>
+	<h1 style="margin-top:50px;" ><?php echo $model->nombre; ?></h1>
 </div>
 
 <div class='row'>
@@ -27,12 +27,10 @@ $this->menu=array(
 			'attributes'=>array(
 				'id',
 		'nombre',
-		'app',
-		'apm',
-		'departamento',
-		'telefono',
-		'celular',
-		'correo',
+		'importancia',
+		'objetivo',
+		'autor',
+		'duracion',
 			),
 		)); ?>
 	</div>

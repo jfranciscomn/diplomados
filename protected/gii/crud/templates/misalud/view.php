@@ -32,6 +32,8 @@ $this->menu=array(
 	<div class='span12'>
 		<?php echo "<?php"; ?> $this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
+			'itemCssClass'=>array(),
+			'htmlOptions'=>array('class'=>'bordered-table zebra-striped'),
 			'attributes'=>array(
 		<?php
 		foreach($this->tableSchema->columns as $column)
