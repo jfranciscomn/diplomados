@@ -17,13 +17,13 @@
 	</div>
 	
 
-	<div class="row">
+<!--	<div class="row">
 		<?php echo $form->labelEx($model,'descripcion'); ?>
 		<?php echo $form->textArea($model,'descripcion',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'descripcion'); ?>
 
 	</div>
-	
+-->
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'creditos'); ?>
@@ -39,7 +39,23 @@
 		<?php echo $form->error($model,'activo'); ?>
 
 	</div>
-	
+
+	<div class="row">
+	    <?php echo $form->labelEx($model,'Descripcion'); ?>
+	    <?php $this->widget('ext.tokeninput.TokenInput', array(
+	        'model' => $model,
+	        'attribute' => 'descripcion',
+	        'url' => array('curso/search'),
+	        'options' => array(
+	            'allowCreation' => true,
+	            //'preventDuplicates' => true,
+	            'resultsFormatter' => 'js:function(item){return "<li>" + item[nombre]+ "</li>" }',
+				
+	            'theme' => 'facebook',
+	        )
+	    )); ?>
+	    <?php echo $form->error($model,'Descripcion'); ?>
+	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

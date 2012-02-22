@@ -61,6 +61,7 @@ class Diplomado extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'diplomadosCursoses' => array(self::HAS_MANY, 'DiplomadosCursos', 'diplomado_id'),
+			'cursos' => array(self::HAS_MANY, 'Cursos', 'curso_id'),
 		);
 	}
 
