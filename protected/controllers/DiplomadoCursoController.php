@@ -1,6 +1,6 @@
 <?php
 
-class DiplomadoController extends Controller
+class DiplomadoCursoController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -31,7 +31,7 @@ class DiplomadoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','registrar'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,7 +43,6 @@ class DiplomadoController extends Controller
 			),
 		);
 	}
-
 
 	/**
 	 * Displays a particular model.
@@ -60,18 +59,16 @@ class DiplomadoController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	
-	
 	public function actionCreate()
 	{
-		$model=new Diplomado;
+		$model=new DiplomadoCurso;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Diplomado']))
+		if(isset($_POST['DiplomadoCurso']))
 		{
-			$model->attributes=$_POST['Diplomado'];
+			$model->attributes=$_POST['DiplomadoCurso'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -93,9 +90,9 @@ class DiplomadoController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Diplomado']))
+		if(isset($_POST['DiplomadoCurso']))
 		{
-			$model->attributes=$_POST['Diplomado'];
+			$model->attributes=$_POST['DiplomadoCurso'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -130,7 +127,7 @@ class DiplomadoController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Diplomado');
+		$dataProvider=new CActiveDataProvider('DiplomadoCurso');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -141,10 +138,10 @@ class DiplomadoController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Diplomado('search');
+		$model=new DiplomadoCurso('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Diplomado']))
-			$model->attributes=$_GET['Diplomado'];
+		if(isset($_GET['DiplomadoCurso']))
+			$model->attributes=$_GET['DiplomadoCurso'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -158,7 +155,7 @@ class DiplomadoController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Diplomado::model()->findByPk($id);
+		$model=DiplomadoCurso::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -170,12 +167,10 @@ class DiplomadoController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='diplomado-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='diplomado-curso-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-	
-	
 }

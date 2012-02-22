@@ -9,6 +9,9 @@
  * @property string $descripcion
  * @property integer $creditos
  * @property integer $activo
+ *
+ * The followings are the available model relations:
+ * @property DiplomadosCursos[] $diplomadosCursoses
  */
 class Diplomado extends CActiveRecord
 {
@@ -32,6 +35,8 @@ class Diplomado extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
+	
+	
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -55,6 +60,7 @@ class Diplomado extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'diplomadosCursoses' => array(self::HAS_MANY, 'DiplomadosCursos', 'diplomado_id'),
 		);
 	}
 

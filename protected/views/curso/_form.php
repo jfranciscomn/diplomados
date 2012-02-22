@@ -49,6 +49,14 @@
 	</div>
 	
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'creditos'); ?>
+		<?php echo $form->textField($model,'creditos'); ?>
+		<?php echo $form->error($model,'creditos'); ?>
+
+	</div>
+	
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

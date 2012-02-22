@@ -1,22 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "Cursos".
+ * This is the model class for table "Instructores".
  *
- * The followings are the available columns in table 'Cursos':
+ * The followings are the available columns in table 'Instructores':
  * @property integer $id
  * @property string $nombre
- * @property string $importancia
- * @property string $objetivo
- * @property string $autor
- * @property integer $duracion
- * @property integer $creditos
+ * @property string $app
+ * @property string $apm
+ * @property string $direccion
+ * @property string $telefono
+ * @property string $celular
+ * @property string $correo
+ *
+ * The followings are the available model relations:
+ * @property Grupos[] $gruposes
  */
-class Curso extends CActiveRecord
+class Instructor extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Curso the static model class
+	 * @return Instructor the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -28,7 +32,7 @@ class Curso extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Cursos';
+		return 'Instructores';
 	}
 
 	/**
@@ -39,13 +43,11 @@ class Curso extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, autor, creditos', 'required'),
-			array('duracion, creditos', 'numerical', 'integerOnly'=>true),
-			array('nombre, autor', 'length', 'max'=>256),
-			array('importancia, objetivo', 'safe'),
+			array('nombre, app, apm, direccion, correo', 'length', 'max'=>100),
+			array('telefono, celular', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, importancia, objetivo, autor, duracion, creditos', 'safe', 'on'=>'search'),
+			array('id, nombre, app, apm, direccion, telefono, celular, correo', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +59,7 @@ class Curso extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'gruposes' => array(self::HAS_MANY, 'Grupos', 'instructor_id'),
 		);
 	}
 
@@ -68,11 +71,12 @@ class Curso extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'nombre' => 'Nombre',
-			'importancia' => 'Importancia',
-			'objetivo' => 'Objetivo',
-			'autor' => 'Autor',
-			'duracion' => 'Duracion',
-			'creditos' => 'Creditos',
+			'app' => 'App',
+			'apm' => 'Apm',
+			'direccion' => 'Direccion',
+			'telefono' => 'Telefono',
+			'celular' => 'Celular',
+			'correo' => 'Correo',
 		);
 	}
 
@@ -89,11 +93,12 @@ class Curso extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('nombre',$this->nombre,true);
-		$criteria->compare('importancia',$this->importancia,true);
-		$criteria->compare('objetivo',$this->objetivo,true);
-		$criteria->compare('autor',$this->autor,true);
-		$criteria->compare('duracion',$this->duracion);
-		$criteria->compare('creditos',$this->creditos);
+		$criteria->compare('app',$this->app,true);
+		$criteria->compare('apm',$this->apm,true);
+		$criteria->compare('direccion',$this->direccion,true);
+		$criteria->compare('telefono',$this->telefono,true);
+		$criteria->compare('celular',$this->celular,true);
+		$criteria->compare('correo',$this->correo,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

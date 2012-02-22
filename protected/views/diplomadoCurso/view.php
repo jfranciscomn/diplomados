@@ -1,13 +1,13 @@
 <?php
 $this->breadcrumbs=array(
-	'Cursos'=>array('index'),
+	'Diplomado Cursos'=>array('index'),
 	$model->id,
 );
 
 $this->menu=array(
-	array('label'=>'Listar Cursos', 'url'=>array('index')),
-	array('label'=>'Crear Cursos', 'url'=>array('create')),
-	array('label'=>'Administrar Cursos', 'url'=>array('admin')),
+	array('label'=>'Listar Diplomado Cursos', 'url'=>array('index')),
+	array('label'=>'Crear Diplomado Cursos', 'url'=>array('create')),
+	array('label'=>'Administrar Diplomado Cursos', 'url'=>array('admin')),
 	array('label'=>'Editar', 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>'Eliminar', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'¿Estas seguro que deseas eliminiar este elemento?')),
 	
@@ -15,7 +15,7 @@ $this->menu=array(
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" ><?php echo $model->nombre; ?></h1>
+	<h1 style="margin-top:50px;" >Ver DiplomadoCurso #<?php echo $model->id; ?></h1>
 </div>
 
 <div class='row'>
@@ -26,13 +26,9 @@ $this->menu=array(
 			'htmlOptions'=>array('class'=>'bordered-table zebra-striped'),
 			'attributes'=>array(
 				'id',
-		'nombre',
-		'importancia',
-		'objetivo',
-		'autor',
-		'duracion',
-		'creditos',
-		
+		'curso_id',
+		'diplomado_id',
+		'estatus',
 			),
 		)); ?>
 	</div>
@@ -51,5 +47,6 @@ $this->menu=array(
 		?>
 	</div>
 </div>
+
 
 

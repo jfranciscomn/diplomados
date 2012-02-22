@@ -35,6 +35,11 @@
 		<?php echo $form->textField($model,'duracion'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'creditos'); ?>
+		<?php echo $form->textField($model,'creditos'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>
