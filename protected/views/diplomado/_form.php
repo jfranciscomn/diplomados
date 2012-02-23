@@ -42,19 +42,19 @@
 	</div>
 
 	<div class="row">
-	    <?php echo "hola" ?>
+	    <?php echo $form->labelEx($model,'nombre');?>
 	    <?php $this->widget('ext.tokeninput.TokenInput', array(
 	        'model' => $model,
 	        'attribute' => 'nombre',
 	        'url' => array('curso/search'),
 	        'options' => array(
-	            'allowCreation' => true,
+	           // 'allowCreation' => true,
 				            'preventDuplicates' => true,
 				            'theme' => 'facebook',
 	            
 	        )
 	    )); ?>
-		
+		<?php echo $form->error($model,'nombre'); ?>
 	</div>
 	
 

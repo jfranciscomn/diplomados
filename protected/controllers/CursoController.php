@@ -195,9 +195,9 @@ class CursoController extends Controller
 			//echo "<pre>"; print_r($criteria); echo "</pre>";
 	    }
 
-	    header('Content-type: application/json');
-	    //echo json_encode($result);
-		echo CJavaScript::encode($result);
+	  //  header('Content-type: application/json');
+	    echo json_encode($result);
+		//echo CJavaScript::encode($result);
 	    Yii::app()->end();
 	}
 }

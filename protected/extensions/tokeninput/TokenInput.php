@@ -94,7 +94,7 @@ class TokenInput extends CWidget
 		if (!is_array($this->options))
 			$this->options = array();
 
-		$value = mb_strtolower(trim($this->model->{$this->attribute}),'UTF-8');
+		$value = trim($this->model->{$this->attribute});
 
         $tokenValue = 'id';
         if (isset($this->options['tokenValue']) && strlen(trim($this->options['tokenValue'])) > 0)
@@ -152,13 +152,9 @@ class TokenInput extends CWidget
 	 */
 	public function registerInitScript()
 	{
-		/*	$selector = '#holacrayola';
-			$js = '$("' .  $selector . '").tokenInput("' . CHtml::normalizeUrl($this->url) . '", ' . CJavaScript::encode($this->options) . ');';
-		echo '<pre>';print_r($js);echo '</pre>';	
-		*/echo '<pre>';print_r( CJavaScript::encode($this->options) );echo '</pre>';
 		$selector = '#' . CHtml::activeId($this->model, $this->attribute);
 		$js = '$("' .  $selector . '").tokenInput("' . CHtml::normalizeUrl($this->url) . '", ' . CJavaScript::encode($this->options) . ');';
-		
+			
 		Yii::app()->getClientScript()->registerScript(__CLASS__.$selector, $js, CClientScript::POS_READY);
 	}
 
