@@ -189,7 +189,7 @@ class CursoController extends Controller
 			
 	        $cursor = Curso::model()->findAll($criteria);
 			foreach ($cursor as $valor)
-				$result[]=$valor->attributes;
+				$result[]=array('id'=>$valor['id'],'name'=>$valor['nombre'] );
 			//echo "<pre>"; print_r($result); echo "</pre>";
 			//echo "<pre>"; print_r($cursor); echo "</pre>";
 			//echo "<pre>"; print_r($criteria); echo "</pre>";

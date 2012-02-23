@@ -636,7 +636,6 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function show_dropdown() {
-		
         dropdown
             .css({
                 position: "absolute",
@@ -692,7 +691,7 @@ $.TokenList = function (input, url_or_data, settings) {
                 this_li = find_value_and_highlight_term(this_li ,value[settings.propertyToSearch], query);            
                 
                 this_li = $(this_li).appendTo(dropdown_ul);
-                alert(dropdown_ul);
+                
                 if(index % 2) {
                     this_li.addClass(settings.classes.dropdownItem);
                 } else {
@@ -836,14 +835,14 @@ $.TokenList = function (input, url_or_data, settings) {
 
     function handleCreation(results) {
     	var displayedItem = {};
-    	displayedItem[settings.propertyToSearch] = input_box.val() + ' ' + settings.createTokenText;
+    	displayedItem['name'] = input_box.val() + ' ' + settings.createTokenText;
     	displayedItem[settings.tokenValue] = input_box.val();
     	displayedItem['wasCreated'] = true;
     	results.push(displayedItem);
 
     	if($.isFunction(settings.onCreate)) {
     		var item = {};
-    		item[settings.propertyToSearch] = input_box.val();
+    		item['name'] = input_box.val();
     		item[settings.tokenValue] = input_box.val();
     		settings.onCreate.call(hidden_input, item);
     	}

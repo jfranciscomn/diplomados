@@ -27,7 +27,7 @@ class DiplomadoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','search'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -177,5 +177,31 @@ class DiplomadoController extends Controller
 		}
 	}
 	
+	public function actionSearch($q)
+	{
+	    $term = '%'.trim($q).'%';
+	    $result = array();
+
+	    if (!empty($term))
+	    {
+			$criteria=new CDbCriteria;
+		//	$criteria->select=array('id', 'nombre');
+			$criteria->condition='nombre LIKE :nombre ';
+			$criteria->params=array(':nombre'=>$term);
+			$criteria->limit='10';
+			
+	        $cursor = Diplomado::model()->findAll($criteria);
+			foreach ($cursor as $valor)
+				$result[]=$valor->attributes;
+			//echo "<pre>"; print_r($result); echo "</pre>";
+			//echo "<pre>"; print_r($cursor); echo "</pre>";
+			//echo "<pre>"; print_r($criteria); echo "</pre>";
+	    }
+
+	    header('Content-type: application/json');
+	    //echo json_encode($result);
+		echo CJavaScript::encode($result);
+	    Yii::app()->end();
+	}
 	
 }

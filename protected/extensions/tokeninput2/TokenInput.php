@@ -9,8 +9,8 @@
  * <ul>
  * 	<li>Currently only string attributes are supported.</li>
  * 	<li>Currently only server-backed search is supported, no local data search.</li>
- * 	<li>Tokens are added using the token value for both tokenValue (default: 'id') and propertyToSearch (default: 'name'), i.e. {'id': value, 'name': value}.</li>
- * 	<li>In production (YII_DEBUG not defined or set to false), a minified version of the JS file is loaded (minified with http://jscompress.com/).</li>
+ * 	<li>Tokens are added using the token value for both 'id' and 'name', i.e. {'id': value, 'name': value}.</li>
+ * 	<li>In production (YII_DEBUG not defined or set to false), a minified version of the JS file is loaded.</li>
  * 	<li>The included Tokeninput plugin is version 1.6.0 enhanced with the pull request 'Allow creation of tokens on the fly' ({@link https://github.com/loopj/jquery-tokeninput/pull/219}).</li>
  * </ul>
  * 
@@ -23,7 +23,6 @@
  *		'options' => array(
  *			'allowCreation' => true,
  *			'preventDuplicates' => true,
- *          'resultsFormatter' => 'js:function(item){ return “<li><p>” + item.name + “</p></li>” }',
  *			'theme' => 'facebook',
  *		)
  *	));
@@ -37,7 +36,7 @@
  * in the extensions 'css' directory for available themes.
  * 
  * @author Haykel Ben Jemia (http://www.allmas-tn.com)
- * @version 0.3
+ * @version 0.2
  * @license Like the jQuery Tokeninput plugin, GPL or MIT depending on the project you are using it in and how you wish to use it.
  */
 class TokenInput extends CWidget
@@ -81,8 +80,10 @@ class TokenInput extends CWidget
 	public static function tokenize($value, $tokenDelimiter=null)
 	{
 		if (empty($tokenDelimiter))
+		{
 			$tokenDelimiter = ',';
-
+		}
+		
 		return preg_split('/\s*' . $tokenDelimiter . '\s*/', $value, -1, PREG_SPLIT_NO_EMPTY);
 	}
 	
@@ -92,24 +93,12 @@ class TokenInput extends CWidget
 	public function init()
 	{
 		if (!is_array($this->options))
+		{
 			$this->options = array();
-
-		$value = mb_strtolower(trim($this->model->{$this->attribute}),'UTF-8');
-
-        $tokenValue = 'id';
-        if (isset($this->options['tokenValue']) && strlen(trim($this->options['tokenValue'])) > 0)
-        {
-            $tokenValue = trim($this->options['tokenValue']);
-            $this->options['tokenValue'] = $tokenValue;
-        }
-
-        $propertyToSearch = 'name';
-        if (isset($this->options['propertyToSearch']) && strlen(trim($this->options['propertyToSearch'])) > 0)
-        {
-            $propertyToSearch = trim($this->options['propertyToSearch']);
-            $this->options['propertyToSearch'] = $propertyToSearch;
-        }
-
+		}
+		
+		$value = trim($this->model->{$this->attribute});
+		
 		if (!empty($value))
 		{
 			$prePopulate = array();
@@ -117,13 +106,19 @@ class TokenInput extends CWidget
 			$tokens = self::tokenize($value, $tokenDelimiter);
 			
 			if (isset($this->options['preventDuplicates']) && $this->options['preventDuplicates'] === true)
+			{
 				$tokens = array_unique($tokens);
-
+			}
+			
 			foreach ($tokens as $token)
-				$prePopulate[] = array($tokenValue => $token, $propertyToSearch => $token);
-
+			{
+				$prePopulate[] = array('id' => $token, 'name' => $token);
+			}
+			
 			if (!empty($prePopulate))
+			{
 				$this->options['prePopulate'] = $prePopulate;
+			}
 		}
 		
 		parent::init();
@@ -152,13 +147,9 @@ class TokenInput extends CWidget
 	 */
 	public function registerInitScript()
 	{
-		/*	$selector = '#holacrayola';
-			$js = '$("' .  $selector . '").tokenInput("' . CHtml::normalizeUrl($this->url) . '", ' . CJavaScript::encode($this->options) . ');';
-		echo '<pre>';print_r($js);echo '</pre>';	
-		*/echo '<pre>';print_r( CJavaScript::encode($this->options) );echo '</pre>';
 		$selector = '#' . CHtml::activeId($this->model, $this->attribute);
-		$js = '$("' .  $selector . '").tokenInput("' . CHtml::normalizeUrl($this->url) . '", ' . CJavaScript::encode($this->options) . ');';
-		
+		$js = '$("' .  $selector . '").tokenInput("' . CHtml::normalizeUrl($this->url) . '", ' . CJSON::encode($this->options) . ');';
+			
 		Yii::app()->getClientScript()->registerScript(__CLASS__.$selector, $js, CClientScript::POS_READY);
 	}
 

@@ -488,6 +488,7 @@ $.TokenList = function (input, url_or_data, settings) {
         return this_token;
     }
 
+	
     // Add a token to the token list based on user input
     function add_token (item) {
         var callback = settings.onAdd;
@@ -636,6 +637,7 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function show_dropdown() {
+		
         dropdown
             .css({
                 position: "absolute",
@@ -742,7 +744,6 @@ $.TokenList = function (input, url_or_data, settings) {
     // than settings.minChars
     function do_search() {
         var query = input_box.val().toLowerCase();
-
         if(query && query.length) {
             if(selected_token) {
                 deselect_token($(selected_token), POSITION.AFTER);
@@ -808,9 +809,11 @@ $.TokenList = function (input, url_or_data, settings) {
                   
                   // only populate the dropdown if the results are associated with the active search query
                   if(input_box.val().toLowerCase() === query.toLowerCase()) {
-                      populate_dropdown(query, settings.jsonContainer ? results[settings.jsonContainer] : results);
+                    populate_dropdown(query, settings.jsonContainer ? results[settings.jsonContainer] : results);
                   }
                 };
+
+
 
                 // Make the request
                 $.ajax(ajax_params);
@@ -834,6 +837,7 @@ $.TokenList = function (input, url_or_data, settings) {
     }
 
     function handleCreation(results) {
+
     	var displayedItem = {};
     	displayedItem[settings.propertyToSearch] = input_box.val() + ' ' + settings.createTokenText;
     	displayedItem[settings.tokenValue] = input_box.val();
@@ -873,6 +877,8 @@ $.TokenList.Cache = function (options) {
     };
 
     this.add = function (query, results) {
+		
+	
         if(size > settings.max_size) {
             flush();
         }
