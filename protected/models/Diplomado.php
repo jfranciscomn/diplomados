@@ -35,8 +35,6 @@ class Diplomado extends CActiveRecord
 	/**
 	 * @return array validation rules for model attributes.
 	 */
-	
-	
 	public function rules()
 	{
 		// NOTE: you should only define rules for those attributes that
@@ -60,9 +58,22 @@ class Diplomado extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'diplomadosCursoses' => array(self::HAS_MANY, 'DiplomadosCursos', 'diplomado_id'),
-			'cursos' => array(self::HAS_MANY, 'Cursos', 'curso_id'),
+			'diplomadosCursos' => array(self::HAS_MANY, 'DiplomadoCurso', 'diplomado_id'),
+			
 		);
+	}
+	
+	public function getEstatusLabel()
+	{
+		return array(
+			0=>'No Activo',
+			1=>'Activo', 
+		);
+	}
+	
+	public function GetEstatusString()
+	{
+		return $this->estatusLabel[$this->activo];
 	}
 
 	/**

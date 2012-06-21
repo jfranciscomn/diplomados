@@ -29,7 +29,17 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+		//echo '<pre>'; print_r(Yii::app()); echo '</pre>';
+	/*	echo '<pre>'; print_r(Yii::app()->user); echo '</pre>';
+		echo '<pre>'; print_r(Yii::app()->user->isGuest); echo '</pre>';
+		echo '<pre>'; print_r(Yii::app()->user->id); echo '</pre>';
+		echo '<pre>'; print_r(Yii::app()->user->name); echo '</pre>';*/
+		if(!Yii::app()->user->isGuest)
+			if(strcmp(Yii::app()->user->id,'Admin')==0)
+				$this->redirect($this->createUrl('diplomado/index'));
+			else
+				$this->redirect($this->createUrl('alumno/perfil'));
+		$this->redirect($this->createUrl('site/login'));
 	}
 
 	/**

@@ -40,11 +40,15 @@ class Persona extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre, app, apm, departamento, correo', 'length', 'max'=>100),
+			array('nombre, app, apm, departamento, correo, password', 'length', 'max'=>100),
 			array('telefono, celular', 'length', 'max'=>15),
+			array('nombre, app, apm, departamento, telefono, correo, password', 'required'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, nombre, app, apm, departamento, telefono, celular, correo', 'safe', 'on'=>'search'),
+			array('id, nombre, app, apm, departamento, telefono, celular, correo, password', 'safe', 'on'=>'search'),
+			array('correo','email'),
+			array('correo','unique'),
+
 		);
 	}
 
@@ -69,12 +73,20 @@ class Persona extends CActiveRecord
 			'nombre' => 'Nombre',
 			'app' => 'Apellido Paterno',
 			'apm' => 'Apellido Materno',
-			'departamento' => 'Departamento',
+			'departamento' => 'Dependencia',
 			'telefono' => 'Telefono',
 			'celular' => 'Celular',
 			'correo' => 'Correo',
+			'password' => 'Password',
 		);
 	}
+	public function getnombreCompleto()
+	{
+		return $this->nombre . '  ' . $this->app . ' ' . $this->apm;
+	}
+	
+	
+
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -95,9 +107,12 @@ class Persona extends CActiveRecord
 		$criteria->compare('telefono',$this->telefono,true);
 		$criteria->compare('celular',$this->celular,true);
 		$criteria->compare('correo',$this->correo,true);
+		$criteria->compare('password',$this->password,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+	
+
 }

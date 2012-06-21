@@ -12,6 +12,7 @@
 		<td >
 			<b><?php echo CHtml::encode($data->getAttributeLabel('fecha_inicial')); ?></b>
 		</td>
+		
 		<td >
 			<b><?php echo CHtml::encode($data->getAttributeLabel('capacidad_max')); ?></b>
 		</td>

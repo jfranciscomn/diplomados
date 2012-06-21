@@ -1,20 +1,30 @@
 <?php
 $this->breadcrumbs=array(
-	'Instructors',
+	'Instructores',
 );
 
+if(strcmp(Yii::app()->user->id,'Admin')!=0)
+	$this->menu = array(
+	array('label'=>'Mi Perfil', 'url'=>array('alumno/perfil')),
+	array('label'=>'Mis Diplomados', 'url'=>array('alumno/dimplomados')),
+	array('label'=>'Mis Cursos', 'url'=>array('alumno/cursos')),
+	array('label'=>'Mis Grupos', 'url'=>array('alumno/grupos')),
+	);
+else
 $this->menu=array(
-	array('label'=>'Crear Instructors', 'url'=>array('create')),
-	array('label'=>'Administrar Instructors', 'url'=>array('admin')),
+	array('label'=>'Crear Instructores', 'url'=>array('create')),
+	array('label'=>'Administrar Instructores', 'url'=>array('admin')),
 );
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" >Instructors</h1>
+	<h1 style="margin-top:50px;" >Instructores</h1>
 </div>
 
 <div class='row'>
+	<?php if(!Yii::app()->user->isGuest){?>
 	<div class="span12">
+	<?php }?>
 
 		<?php $this->widget('ext.custom.widgets.CCustomListView', array(
 			'dataProvider'=>$dataProvider,
@@ -22,6 +32,7 @@ $this->menu=array(
 			'footersview' => '_footersview',
 			'itemView'=>'_view',
 		)); ?>
+	<?php if(!Yii::app()->user->isGuest){?>
 	</div>
 	<div class="span4">					
 			<?php
@@ -36,4 +47,5 @@ $this->menu=array(
 				$this->endWidget();
 			?>
 	</div>
+	<?php }?>
 </div>

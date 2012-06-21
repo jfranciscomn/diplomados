@@ -65,12 +65,14 @@ class GrupoController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		
 		if(isset($_POST['Grupo']))
 		{
 			$model->attributes=$_POST['Grupo'];
+			//$model->fecha_inicial=DateTime::createFromFormat('d/m/Y',$model->fecha_inicial)->format('Y-m-d'); 
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+				
 		}
 
 		$this->render('create',array(
@@ -93,7 +95,11 @@ class GrupoController extends Controller
 		if(isset($_POST['Grupo']))
 		{
 			$model->attributes=$_POST['Grupo'];
-			if($model->save())
+			
+		
+			//$model->fecha_inicial=DateTime::createFromFormat('d/m/Y',$model->fecha_inicial)->format('Y-m-d'); 
+			 
+			$model->save();
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -173,4 +179,5 @@ class GrupoController extends Controller
 			Yii::app()->end();
 		}
 	}
+	
 }

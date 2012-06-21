@@ -5,7 +5,9 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
+	<?php if(!Yii::app()->user->isGuest){?>
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<?php }?>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -64,9 +66,16 @@
 
 	</div>
 	
+	<div class="row">
+		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->error($model,'password'); ?>
+
+	</div>
+	
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

@@ -12,7 +12,5 @@
 		<td >
 			<b><?php echo CHtml::encode($data->getAttributeLabel('creditos')); ?></b>
 		</td>
-		<td >
-			<b><?php echo CHtml::encode($data->getAttributeLabel('activo')); ?></b>
-		</td>
+		
 	</tr>

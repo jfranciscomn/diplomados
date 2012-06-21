@@ -5,7 +5,15 @@ $this->breadcrumbs=array(
 	'Update',
 );
 
-$this->menu=array(
+if(strcmp(Yii::app()->user->id,'Admin')!=0)
+	$this->menu = array(
+	array('label'=>'Mi Perfil', 'url'=>array('alumno/perfil')),
+	array('label'=>'Mis Diplomados', 'url'=>array('alumno/dimplomados')),
+	array('label'=>'Mis Cursos', 'url'=>array('alumno/cursos')),
+	array('label'=>'Mis Grupos', 'url'=>array('alumno/grupos')),
+	);
+else
+	$this->menu=array(
 	array('label'=>'Listar Personas', 'url'=>array('index')),
 	array('label'=>'Crear Personas', 'url'=>array('create')),
 	array('label'=>'Ver Persona', 'url'=>array('view', 'id'=>$model->id)),
@@ -14,7 +22,11 @@ $this->menu=array(
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" >Editar Persona <?php echo $model->id; ?></h1>
+	<?php if(strcmp(Yii::app()->user->id,'Admin')!=0){ ?>
+		<h1 style="margin-top:50px;" >Editar Perfil </h1>
+	<?php } else {?>
+		<h1 style="margin-top:50px;" >Editar Persona <?php echo $model->id; ?></h1>
+	<?php }?>
 </div>
 
 

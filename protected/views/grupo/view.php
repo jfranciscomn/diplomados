@@ -4,6 +4,14 @@ $this->breadcrumbs=array(
 	$model->id,
 );
 
+if(strcmp(Yii::app()->user->id,'Admin')!=0)
+	$this->menu = array(
+	array('label'=>'Mi Perfil', 'url'=>array('alumno/perfil')),
+	array('label'=>'Mis Diplomados', 'url'=>array('alumno/dimplomados')),
+	array('label'=>'Mis Cursos', 'url'=>array('alumno/cursos')),
+	array('label'=>'Mis Grupos', 'url'=>array('alumno/grupos')),
+	);
+else
 $this->menu=array(
 	array('label'=>'Listar Grupos', 'url'=>array('index')),
 	array('label'=>'Crear Grupos', 'url'=>array('create')),
@@ -19,22 +27,39 @@ $this->menu=array(
 </div>
 
 <div class='row'>
+	<?php if(!Yii::app()->user->isGuest){?>
 	<div class='span12'>
+	<?php }?>
 		<?php $this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
 			'itemCssClass'=>array(),
 			'htmlOptions'=>array('class'=>'bordered-table zebra-striped'),
 			'attributes'=>array(
 				'id',
-		'curso_id',
-		'instructor_id',
+		'curso.nombre:text:Curso',
+		'instructor.nombreCompleto:text:Instructor',
 		'fecha_inicial',
+		'fecha_final',
 		'capacidad_max',
 		'inscritos',
 		'observaciones',
-		'estatus',
+		'estatusString:text:Estatus',
 			),
-		)); ?>
+		)); ?>		
+		<?php $this->widget('ext.custom.widgets.CCustomListView', array(
+					'dataProvider'=>new CActiveDataProvider('AlumnoGrupo', array(
+					    'criteria'=>array(
+					        'condition'=>"grupo_id={$model->id}",
+					    ),
+					    'pagination'=>array(
+					        'pageSize'=>10,
+					    ),
+					)),
+					'headersview' =>'_headersviewalumnos',
+					'footersview' => '_footersviewalumnos',
+					'itemView'=>'_viewalumnos',
+				)); ?>
+	<?php if(!Yii::app()->user->isGuest){?>
 	</div>
 	<div class='span4'>
 		<?php
@@ -50,6 +75,7 @@ $this->menu=array(
 			$this->endWidget();
 		?>
 	</div>
+	<?php }?>
 </div>
 
 

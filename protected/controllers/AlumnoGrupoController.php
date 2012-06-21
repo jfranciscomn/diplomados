@@ -65,6 +65,7 @@ class AlumnoGrupoController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+		
 
 		if(isset($_POST['AlumnoGrupo']))
 		{
@@ -72,10 +73,52 @@ class AlumnoGrupoController extends Controller
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
+		
+		if(isset($_GET['correo']) && isset($_GET['grupo']))
+		{
+			//echo '<pre>'; print_r($_GET); echo '</pre>';
+			
+			$criteria=new CDbCriteria;
+			$criteria->condition='correo like :correo';
+			$criteria->params=array(':correo'=>$_GET['correo']);
+			$persona=Persona::model()->find($criteria);
+			if($persona===null)
+				throw new CHttpException(401,'Usuario no Autorizado.');
+				
+			$model->persona_id = $persona->id;
+			$model->grupo_id =$_GET['grupo'];
+			$model->estatus = 2;
+			
+			$grupo = Grupo::model()->findByPk($_GET['grupo']);
+			if($grupo->capacidad_max<= $grupo->inscritos)
+				throw new CHttpException(428,'Cupo Excedido.');
+				
+			if(isset($grupo) && $this->validateModel($model) && $model->save())
+			{
+				$grupo->inscritos= $grupo->inscritos + 1;
+				$grupo->save();	
+			}
+			else
+				throw new CHttpException(400,'Error al procesar la solicitud.');
+			
+			$this->redirect(array('grupo/index'));
+		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+	
+	public function validateModel($model)
+	{
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('grupo_id',$model->grupo_id);
+		$criteria->compare('persona_id',$model->persona_id);
+		
+		$nuevo = AlumnoGrupo::model()->find($criteria);
+		return !isset($nuevo);
+		
 	}
 
 	/**
@@ -90,13 +133,24 @@ class AlumnoGrupoController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['AlumnoGrupo']))
+		if(isset($_POST['AlumnoGrupo']) || isset($_GET['AlumnoGrupo']))
 		{
-			$model->attributes=$_POST['AlumnoGrupo'];
+			$model->attributes=isset($_POST['AlumnoGrupo'])? $_POST['AlumnoGrupo'] : $_GET['AlumnoGrupo'];
+			
+			if(isset($_GET['estatus']))
+			{
+				$model->estatus=$_GET['estatus'];
+				if($model->estatus==3)
+				{
+					$grupo = Grupo::model()->findByPk($model->grupo_id);
+					$grupo->inscritos= $grupo->inscritos - 1;
+					$grupo->save();
+				}
+			}	
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
+	
 		$this->render('update',array(
 			'model'=>$model,
 		));

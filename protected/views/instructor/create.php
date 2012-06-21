@@ -1,17 +1,17 @@
 <?php
 $this->breadcrumbs=array(
-	'Instructors'=>array('index'),
+	'Instructores'=>array('index'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'Listar Instructors', 'url'=>array('index')),
-	array('label'=>'Administrar Instructors', 'url'=>array('admin')),
+	array('label'=>'Listar Instructores', 'url'=>array('index')),
+	array('label'=>'Administrar Instructores', 'url'=>array('admin')),
 );
 ?>
 
 <div class="page-header">
-	<h1 style="margin-top:50px;" >Crear Instructors</h1>
+	<h1 style="margin-top:50px;" >Crear Instructores</h1>
 </div>
 
 

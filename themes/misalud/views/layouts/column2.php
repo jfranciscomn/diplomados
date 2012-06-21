@@ -3,7 +3,9 @@
 		
 		<?php echo "<div class='span16'>"; ?>
 	
+			
 		
+			 
 		<?php echo $content; ?>
 	
 		

@@ -79,6 +79,11 @@ class Instructor extends CActiveRecord
 			'correo' => 'Correo',
 		);
 	}
+	
+	public function getnombreCompleto()
+	{
+		return $this->nombre . '  ' . $this->app . ' ' . $this->apm;
+	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

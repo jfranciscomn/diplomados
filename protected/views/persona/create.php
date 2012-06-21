@@ -11,7 +11,12 @@ $this->menu=array(
 ?>
 
 <div class="page-header">
+	<?php if(!Yii::app()->user->isGuest){?>
 	<h1 style="margin-top:50px;" >Crear Personas</h1>
+	<?php } 
+	 else{?>
+	<h1 style="margin-top:50px;" >Registrar</h1>
+	<?php } ?>
 </div>
 
 
@@ -19,6 +24,7 @@ $this->menu=array(
 	<div class='span12'>
 		<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
 	</div>
+	<?php if(!Yii::app()->user->isGuest){?>
 	<div class='span4'>
 		<?php
 			$this->beginWidget('zii.widgets.CPortlet', array(
@@ -33,5 +39,6 @@ $this->menu=array(
 			$this->endWidget();
 		?>
 	</div>
+	<?php } ?>
 </div>
 

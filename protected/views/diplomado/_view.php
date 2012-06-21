@@ -11,7 +11,5 @@
 		<td>
 			<?php echo CHtml::encode($data->creditos); ?>
 		</td>
-		<td>
-			<?php echo CHtml::encode($data->activo); ?>
-		</td>
+		
 	</tr>

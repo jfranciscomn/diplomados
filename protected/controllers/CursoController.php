@@ -27,7 +27,7 @@ class CursoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','search'),
+				'actions'=>array('index','view','autocompletesearch'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -174,30 +174,24 @@ class CursoController extends Controller
 		}
 	}
 	
-	public function actionSearch($q)
+	public function actionAutocompletesearch()
 	{
-	    $term = '%'.trim($q).'%';
-	    $result = array();
-
-	    if (!empty($term))
+	    $q = "%". $_GET['term'] ."%";
+	 	$result = array();
+	    if (!empty($q))
 	    {
 			$criteria=new CDbCriteria;
-			$criteria->select=array('id', 'nombre');
-			$criteria->condition='nombre LIKE :nombre ';
-			$criteria->params=array(':nombre'=>$term);
+			//$criteria->select=array('id', 'nombre');
+			$criteria->condition='lower(nombre) like lower(:nombre) ';
+			$criteria->params=array(':nombre'=>$q);
 			$criteria->limit='10';
-			
-	        $cursor = Curso::model()->findAll($criteria);
-			foreach ($cursor as $valor)
-				$result[]=array('id'=>$valor['id'],'name'=>$valor['nombre'] );
-			//echo "<pre>"; print_r($result); echo "</pre>";
-			//echo "<pre>"; print_r($cursor); echo "</pre>";
-			//echo "<pre>"; print_r($criteria); echo "</pre>";
+	       	$cursor = Curso::model()->findAll($criteria);
+			foreach ($cursor as $valor)	
+				$result[]=Array('label' => $valor->nombre,  
+				                'value' => $valor->nombre,
+				                'id' => $valor->id, );
 	    }
-
-	  //  header('Content-type: application/json');
 	    echo json_encode($result);
-		//echo CJavaScript::encode($result);
 	    Yii::app()->end();
 	}
 }

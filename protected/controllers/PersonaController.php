@@ -27,11 +27,11 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','autocompletesearch','create'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,7 +70,10 @@ class PersonaController extends Controller
 		{
 			$model->attributes=$_POST['Persona'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				if(!Yii::app()->user->isGuest)
+					$this->redirect(array('view','id'=>$model->id));
+				else
+					$this->redirect(array('site/login'));
 		}
 
 		$this->render('create',array(
@@ -83,10 +86,13 @@ class PersonaController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model=$this->loadModel($id);
-
+		$model=null;
+		if(isset($_GET['id']))
+			$model=$this->loadModel($_GET['id']);
+		else if(isset($_GET['correo']))
+			$model=$this->loadModelCorreo($_GET['correo']);
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -94,7 +100,10 @@ class PersonaController extends Controller
 		{
 			$model->attributes=$_POST['Persona'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				if(!Yii::app()->user->isGuest)
+					$this->redirect(array('view','id'=>$model->id));
+				else
+					$this->redirect(array('site/login'));
 		}
 
 		$this->render('update',array(
@@ -160,6 +169,17 @@ class PersonaController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+	
+	public function loadModelCorreo($id)
+	{
+		$criteria=new CDbCriteria;
+		$criteria->condition='correo like :correo';
+		$criteria->params=array(':correo'=>$id);
+		$model=Persona::model()->find($criteria);
+		if($model===null)
+			throw new CHttpException(404,'The requested page does not exist.');
+		return $model;
+	}
 
 	/**
 	 * Performs the AJAX validation.
@@ -172,5 +192,26 @@ class PersonaController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	
+	public function actionAutocompletesearch()
+	{
+	    $q = "%". $_GET['term'] ."%";
+	 	$result = array();
+	    if (!empty($q))
+	    {
+			$criteria=new CDbCriteria;
+			$criteria->select=array('id', "CONCAT_WS(' ',nombre,app,apm) as nombre");
+			$criteria->condition="lower(CONCAT_WS(' ',nombre,app,apm)) like lower(:nombre) ";
+			$criteria->params=array(':nombre'=>$q);
+			$criteria->limit='10';
+	       	$cursor = Persona::model()->findAll($criteria);
+			foreach ($cursor as $valor)	
+				$result[]=Array('label' => $valor->nombre,  
+				                'value' => $valor->nombre,
+				                'id' => $valor->id, );
+	    }
+	    echo json_encode($result);
+	    Yii::app()->end();
 	}
 }

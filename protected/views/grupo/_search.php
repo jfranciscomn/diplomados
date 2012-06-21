@@ -21,9 +21,44 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'fecha_inicial'); ?>
-		<?php echo $form->textField($model,'fecha_inicial'); ?>
+		<?php echo $form->labelEx($model,'fecha_inicial'); ?>
+		<?php $form->widget('zii.widgets.jui.CJuiDatePicker', array(
+				    //'name'=>'fecha',
+				    'model'=>$model,
+				    'attribute'=>'fecha_inicial',
+				    //'value' => $model->fecha_inicial,
+				    'options'=>array(
+					'showAnim'=>'fold',
+					'dateFormat'=>'yy-mm-dd 00:00:00',
+				    ),
+				    'htmlOptions'=>array(
+					'style'=>'height:20px;'
+					
+				    ),
+				));
+			?>
+
 	</div>
+	
+	<div class="row">
+		<?php echo $form->labelEx($model,'fecha_final'); ?>
+		<?php $form->widget('zii.widgets.jui.CJuiDatePicker', array(
+				    //'name'=>'fecha',
+				    'model'=>$model,
+				    'attribute'=>'fecha_final',
+				    //'value' => $model->fecha_inicial,
+				    'options'=>array(
+					'showAnim'=>'fold',
+					'dateFormat'=>'yy-mm-dd 00:00:00',
+				    ),
+				    'htmlOptions'=>array(
+					'style'=>'height:20px;'
+					
+				    ),
+				));
+			?>
+	</div>
+
 
 	<div class="row">
 		<?php echo $form->label($model,'capacidad_max'); ?>

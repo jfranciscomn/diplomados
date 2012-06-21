@@ -4,6 +4,14 @@ $this->breadcrumbs=array(
 	$model->id,
 );
 
+if(strcmp(Yii::app()->user->id,'Admin')!=0)
+	$this->menu = array(
+	array('label'=>'Mi Perfil', 'url'=>array('alumno/perfil')),
+	array('label'=>'Mis Diplomados', 'url'=>array('alumno/dimplomados')),
+	array('label'=>'Mis Cursos', 'url'=>array('alumno/cursos')),
+	array('label'=>'Mis Grupos', 'url'=>array('alumno/grupos')),
+	);
+else
 $this->menu=array(
 	array('label'=>'Listar Alumno Grupos', 'url'=>array('index')),
 	array('label'=>'Crear Alumno Grupos', 'url'=>array('create')),
@@ -19,19 +27,22 @@ $this->menu=array(
 </div>
 
 <div class='row'>
+	<?php if(!Yii::app()->user->isGuest){?>
 	<div class='span12'>
+	<?php }?>
 		<?php $this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
 			'itemCssClass'=>array(),
 			'htmlOptions'=>array('class'=>'bordered-table zebra-striped'),
 			'attributes'=>array(
 				'id',
-		'grupo_id',
-		'persona_id',
+		'grupo.nombre:text:Grupo',
+		'persona.nombreCompleto:text:Alumno',
 		'observaciones',
-		'estatus',
+		'estatusString:text:Estatus',
 			),
 		)); ?>
+	<?php if(!Yii::app()->user->isGuest){?>
 	</div>
 	<div class='span4'>
 		<?php
@@ -46,7 +57,9 @@ $this->menu=array(
 				));	
 			$this->endWidget();
 		?>
+	
 	</div>
+	<?php }?>
 </div>
 
 

@@ -58,8 +58,8 @@ class CursoDependencia extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'curso' => array(self::BELONGS_TO, 'Cursos', 'curso_id'),
-			'dependencia' => array(self::BELONGS_TO, 'Cursos', 'dependencia_id'),
+			'curso' => array(self::BELONGS_TO, 'Curso', 'curso_id'),
+			'dependencia' => array(self::BELONGS_TO, 'Curso', 'dependencia_id'),
 		);
 	}
 
@@ -76,6 +76,15 @@ class CursoDependencia extends CActiveRecord
 			'estatus' => 'Estatus',
 		);
 	}
+	
+	public function getEstatusLabel()
+	{
+		return array(
+			0=>'No Activo',
+			1=>'Activo', 
+		);
+	}
+	
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.

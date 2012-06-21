@@ -4,6 +4,14 @@ $this->breadcrumbs=array(
 	$model->id,
 );
 
+if(strcmp(Yii::app()->user->id,'Admin')!=0)
+$this->menu = array(
+array('label'=>'Perfil', 'url'=>array('alumno/perfil')),
+array('label'=>'Mis Diplomados', 'url'=>array('alumno/dimplomados')),
+array('label'=>'Mis Cursos', 'url'=>array('alumno/cursos')),
+array('label'=>'Mis Grupos', 'url'=>array('alumno/grupos')),
+);
+else
 $this->menu=array(
 	array('label'=>'Listar Diplomados', 'url'=>array('index')),
 	array('label'=>'Crear Diplomados', 'url'=>array('create')),
@@ -19,7 +27,9 @@ $this->menu=array(
 </div>
 
 <div class='row'>
+	<?php if(!Yii::app()->user->isGuest){?>
 	<div class='span12'>
+	<?php }?>
 		<?php $this->widget('zii.widgets.CDetailView', array(
 			'data'=>$model,
 			'itemCssClass'=>array(),
@@ -29,9 +39,24 @@ $this->menu=array(
 		'nombre',
 		'descripcion',
 		'creditos',
-		'activo',
+		'estatusString:text:Activo',
 			),
 		)); ?>
+		
+		<?php $this->widget('ext.custom.widgets.CCustomListView', array(
+			'dataProvider'=>new CActiveDataProvider('DiplomadoCurso', array(
+			    'criteria'=>array(
+			        'condition'=>"diplomado_id={$model->id}",
+			    ),
+			    'pagination'=>array(
+			        'pageSize'=>10,
+			    ),
+			)),
+			'headersview' =>'_headersviewcurso',
+			'footersview' => '_footersviewcurso',
+			'itemView'=>'_viewcurso',
+		)); ?>
+	<?php if(!Yii::app()->user->isGuest){?>
 	</div>
 	<div class='span4'>
 		<?php
@@ -47,6 +72,7 @@ $this->menu=array(
 			$this->endWidget();
 		?>
 	</div>
+	<?php }?>
 </div>
 
 

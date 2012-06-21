@@ -17,7 +17,8 @@ $this->menu=array(
 
 <div class='row'>
 	<div class='span12'>
-		<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+		<?php echo $this->renderPartial('_form', array('model'=>$model )
+		); ?>
 	</div>
 	<div class='span4'>
 		<?php

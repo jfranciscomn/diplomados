@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
-	'Instructors'=>array('index'),
+	'Instructores'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
 
 $this->menu=array(
-	array('label'=>'Listar Instructors', 'url'=>array('index')),
-	array('label'=>'Crear Instructors', 'url'=>array('create')),
+	array('label'=>'Listar Instructores', 'url'=>array('index')),
+	array('label'=>'Crear Instructores', 'url'=>array('create')),
 	array('label'=>'Ver Instructor', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Administrar Instructors', 'url'=>array('admin')),
+	array('label'=>'Administrar Instructores', 'url'=>array('admin')),
 );
 ?>
 

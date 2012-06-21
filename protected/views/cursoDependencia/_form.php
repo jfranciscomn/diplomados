@@ -35,14 +35,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'estatus'); ?>
-		<?php echo $form->textField($model,'estatus'); ?>
+		<?php echo $form->dropDownList($model,'estatus',$model->estatusLabel); ?>
 		<?php echo $form->error($model,'estatus'); ?>
-
 	</div>
 	
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? 'Crear' : 'Guardar'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

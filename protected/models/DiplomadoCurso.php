@@ -56,8 +56,8 @@ class DiplomadoCurso extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'diplomado' => array(self::BELONGS_TO, 'Diplomados', 'diplomado_id'),
-			'curso' => array(self::BELONGS_TO, 'Cursos', 'curso_id'),
+			'diplomado' => array(self::BELONGS_TO, 'Diplomado', 'diplomado_id'),
+			'curso' => array(self::BELONGS_TO, 'Curso', 'curso_id'),
 		);
 	}
 
@@ -73,7 +73,44 @@ class DiplomadoCurso extends CActiveRecord
 			'estatus' => 'Estatus',
 		);
 	}
-
+	 
+	public function markToDelete()
+	{
+		$tmp=$this->search()->getData();
+		foreach($tmp as $item)
+		{
+			$item->estatus=100;
+			$item->save();
+		}
+		
+	}
+    
+	public function customUpdate()
+	{
+		$tmp=$this->search()->getData();
+		$this->estatus=1;
+		if(count($tmp)>0)
+		{
+			$tmp=$tmp[0];
+			$this->id =$tmp->id;
+		}
+		
+		$this->save();	
+		//echo '<pre>Curso Diplomado '; print_r($this->attributes); echo '</pre>';
+	
+	}
+	
+	public function getEstatusLabel()
+	{
+		return array(
+			0=>'No Activo',
+			1=>'Activo', 
+		);
+	}
+	public function GetEstatusString()
+	{
+		return $this->estatusLabel[$this->estatus];
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

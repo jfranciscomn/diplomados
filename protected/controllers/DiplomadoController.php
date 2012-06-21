@@ -31,7 +31,7 @@ class DiplomadoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','registrar'),
+				'actions'=>array('create','update','registrar','autocompletesearch'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -73,7 +73,27 @@ class DiplomadoController extends Controller
 		{
 			$model->attributes=$_POST['Diplomado'];
 			if($model->save())
+			{
+			
+				$strcursos=$_POST['Curso']['id'];
+				//echo '<pre>'; print_r($strcursos); echo '</pre>';
+			
+				$lscurso=explode(',',$strcursos);
+				$cursos = new DiplomadoCurso;
+				$cursos->diplomado_id=$model->id;
+				$cursos->markToDelete();
+				foreach($lscurso as $curso_id)
+				{
+					$cursos = new DiplomadoCurso;
+					$cursos->curso_id=$curso_id;
+					$cursos->diplomado_id=$model->id;
+					$cursos->customUpdate();
+				}
 				$this->redirect(array('view','id'=>$model->id));
+
+				//echo '<pre> Diplomado'; print_r($model->attributes); echo '</pre>';
+			}
+			
 		}
 
 		$this->render('create',array(
@@ -159,6 +179,8 @@ class DiplomadoController extends Controller
 	public function loadModel($id)
 	{
 		$model=Diplomado::model()->findByPk($id);
+		//echo "<pre>"; print_r($model); echo "</pre>";
+		//echo "<pre>"; print_r($model->diplomadosCursoses[0]->curso->attributes); echo "</pre>";
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -177,6 +199,27 @@ class DiplomadoController extends Controller
 		}
 	}
 	
+	public function actionAutocompletesearch()
+	{
+		$q = "%". $_GET['term'] ."%";
+	 	$result = array();
+	    if (!empty($q))
+	    {
+			$criteria=new CDbCriteria;
+		//	$criteria->select=array('id', 'nombre');
+			$criteria->condition='lower(nombre) LIKE lower(:nombre) ';
+			$criteria->params=array(':nombre'=>$q);
+			$criteria->limit='10';
+			
+	        $cursor = Diplomado::model()->findAll($criteria);
+			foreach ($cursor as $valor)	
+				$result[]=Array('label' => $valor->nombre,  
+				                'value' => $valor->nombre,
+				                'id' => $valor->id, );
+		}
+		echo json_encode($result);
+	    Yii::app()->end();
+	}
 	public function actionSearch($q)
 	{
 	    $term = '%'.trim($q).'%';

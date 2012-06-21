@@ -20,6 +20,7 @@ class AlumnoGrupo extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * @return AlumnoGrupo the static model class
 	 */
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -58,8 +59,8 @@ class AlumnoGrupo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'persona' => array(self::BELONGS_TO, 'Personas', 'persona_id'),
-			'grupo' => array(self::BELONGS_TO, 'Grupos', 'grupo_id'),
+			'persona' => array(self::BELONGS_TO, 'Persona', 'persona_id'),
+			'grupo' => array(self::BELONGS_TO, 'Grupo', 'grupo_id'),
 		);
 	}
 
@@ -71,12 +72,21 @@ class AlumnoGrupo extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'grupo_id' => 'Grupo',
-			'persona_id' => 'Persona',
+			'persona_id' => 'Alumno',
 			'observaciones' => 'Observaciones',
 			'estatus' => 'Estatus',
 		);
 	}
-
+	
+	public function getEstatusLabel()
+	{
+		return array('No Inscrito','Inscrito','Preinscrito','No Aceptado');
+	}
+	
+	public function GetEstatusString()
+	{
+		return $this->estatusLabel[$this->estatus];
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

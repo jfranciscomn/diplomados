@@ -11,6 +11,7 @@ return array(
 	
 	'language'=>'es', // Este es el lenguaje en el que querés que muestre las cosas
 	'sourceLanguage'=>'es',
+	//'dateFormat' =>'d/m/Y',
 	
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -19,7 +20,10 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'ext.giix-components.*',
 	),
+	
+//	'locale'=>array('dateFormat'=>'d/m/Y',),
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
@@ -29,7 +33,7 @@ return array(
 			'password'=>'123qwe',
 		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			'generatorPaths'=>array('ext.YiiMongoDbSuite.gii','application.gii'),
+			'generatorPaths'=>array('ext.YiiMongoDbSuite.gii','application.gii','ext.giix-core'),
 		),
 		
 	),
@@ -85,7 +89,7 @@ return array(
 		),
 	),
 	//'theme'=>'zine',
-	//'theme'=>'misalud',
+	'theme'=>'misalud',
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
